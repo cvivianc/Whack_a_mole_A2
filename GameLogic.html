@@ -1,0 +1,81 @@
+<html lang="en">
+
+<head>
+    <title>Whack-A-Mole Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <!-- style sheets for whack-a-mole targets -->
+    <style>
+        .circleCentral {
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            background: green;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .circle10px {
+            border-radius: 100%;
+            width: 10px;
+            height: 10px;
+            background: red;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+        
+        .circle30px {
+            border-radius: 100%;
+            width: 30px;
+            height: 30px;
+            background: red;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+        
+        .circle50px {
+            border-radius: 100%;
+            width: 50px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+        
+        .displaytext {
+            font-family: 'Silkscreen', cursive;
+        }
+    </style>
+</head>
+
+<!-- Page HTML -->
+
+<body onload="StartUpSettings()">
+    <!-- TODO: add score, round count..etc -->
+    <div id="centralCircle" class="circleCentral" onclick="StartRound()"></div>
+
+    <h1>
+        <p id="text">Whack-A-Mole Game (Assignment 2)</p>
+    </h1>
+    <main>
+        <h2 class="displaytext">Round</h2>
+        <div id="roundnumber" class="displaytext"></div>
+        <h2 class="displaytext">Score</h2>
+        <div id="score" class="displaytext"></div>
+    </main>
+</body>
+
+<script type="text/javascript">
+    // Game Logic goes here
+
+    function StartRound() {
+        // Start the first round and load the first game target
+    }
+</script>
+
+</html>
