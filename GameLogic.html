@@ -60,9 +60,10 @@
     <div id="centralCircle" class="circleCentral" onclick="StartRound()"></div>
 
     <h1>
-        <p id="text">Whack-A-Mole Game (Assignment 2)</p>
+        <p id="text" class="displaytext">Whack-A-Mole Game</p>
     </h1>
     <main>
+        <!-- display text -->
         <h2 class="displaytext">Round</h2>
         <div id="roundnumber" class="displaytext"></div>
         <h2 class="displaytext">Score</h2>
@@ -72,9 +73,19 @@
 
 <script type="text/javascript">
     // Game Logic goes here
-
     function StartRound() {
         // Start the first round and load the first game target
+        // manipulate round number and score
+        // document.getElementById("roundnumber").innerHTML = ;
+        // document.getElementById("score").innerHTML = ;
+    }
+
+    //a random amount of seconds is calculated between 2 and 5 seconds
+    function getRandomTime() {
+        var min = 2,
+            max = 5,
+            rand = Math.floor(Math.random() * (max - min + 1) + min);
+        return rand * THOUSAND;
     }
 </script>
 
