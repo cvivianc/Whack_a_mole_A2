@@ -117,7 +117,10 @@
         circle3 = document.getElementById('30');
         circle5 = document.getElementById('50');
         gettarget = [circle1, circle3, circle5];
-        console.log(gettarget)
+        // get random integer from 0-2
+        randomselect = Math.floor(Math.random() * 3);
+        // select the random array
+        console.log(gettarget[randomselect]);
     }
     //a random amount of seconds is calculated between 2 and 5 seconds
     function getRandomTime() {
