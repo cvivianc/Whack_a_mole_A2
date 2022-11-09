@@ -65,45 +65,55 @@
     <header>
         <!-- display text -->
         <h2 id="roundnumber" class="displaytext"></h2>
+        <p id="printround" class="displaytext"></p>
         <h2 id="score" class="displaytext"></h2>
     </header>
     <main>
-        <div class="circle10px"></div>
-        <div class="circle30px"></div>
-        <div class="circle50px"></div>
+        <div class="circle10px" id="10"></div>
+        <div class="circle30px" id="30"></div>
+        <div class="circle50px" id="50"></div>
     </main>
 </body>
 
 <script type="text/javascript">
     // Game Logic goes here
+    var count = 0
+
     function StartRound() {
+        // count how many times
+        count++
+        document.getElementById('printround').innerHTML = count;
+
         // open popup
         printtext();
+        randomtarget();
+
     }
 
     function printtext() {
+        // print score and round 
         btn = document.getElementById('centralCircle')
         roundnum = document.getElementById('roundnumber')
         score = document.getElementById('score')
 
         roundnum.innerHTML = "Round";
         score.innerHTML = "Score"
-        Randomposition();
+    }
+
+
+    function targetAppear() {
 
     }
 
-    function targetAppear(){
-        
-    }
+    function randomtarget() {
+        // store circles in an array!
+        circle1 = document.getElementById('10');
+        circle3 = document.getElementById('30');
+        circle5 = document.getElementById('50');
+        gettarget = [circle1, circle3, circle5];
 
-    function Randomposition() {
-        Xmax = window.innerWidth;
-        Ymax = window.innerHeight;
-        CircleX = Math.random() * (Xmax - 1) + 1;
-        CircleY = Math.random() * (Ymax - 1) + 1;
+        console.log(gettarget[0]);
 
-        console.log(CircleY)
-        console.log(CircleX)
     }
     //a random amount of seconds is calculated between 2 and 5 seconds
     function getRandomTime() {
