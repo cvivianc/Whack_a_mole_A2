@@ -26,7 +26,7 @@
             height: 10px;
             background: red;
             position: absolute;
-            transform: translate(-50%, -50%);
+            /* transform: translate(-50%, -50%); */
         }
         
         .circle30px {
@@ -35,7 +35,7 @@
             height: 30px;
             background: red;
             position: absolute;
-            transform: translate(-50%, -50%);
+            /* transform: translate(-50%, -50%); */
         }
         
         .circle50px {
@@ -44,7 +44,7 @@
             height: 50px;
             background: red;
             position: absolute;
-            transform: translate(-50%, -50%);
+            /* transform: translate(-50%, -50%); */
         }
         
         .displaytext {
@@ -62,24 +62,45 @@
     <h1>
         <p id="text" class="displaytext">Whack-A-Mole Game</p>
     </h1>
-    <main>
+    <header>
         <!-- display text -->
-        <h2 class="displaytext">Round</h2>
-        <div id="roundnumber" class="displaytext"></div>
-        <h2 class="displaytext">Score</h2>
-        <div id="score" class="displaytext"></div>
+        <h2 id="roundnumber" class="displaytext"></h2>
+        <h2 id="score" class="displaytext"></h2>
+    </header>
+    <main>
+        <div class="circle10px"></div>
+        <div class="circle30px"></div>
+        <div class="circle50px"></div>
     </main>
 </body>
 
 <script type="text/javascript">
+    let 10 = document.getElementsByClassName('circle10px');
+    let 30 = document.getElementsByClassName('circle30px');
+    let 50 = document.getElementsByClassName('circle50px');
+
     // Game Logic goes here
     function StartRound() {
-        // Start the first round and load the first game target
-        // manipulate round number and score
-        // document.getElementById("roundnumber").innerHTML = ;
-        // document.getElementById("score").innerHTML = ;
+        // open popup
+        btn = document.getElementById('centralCircle')
+        roundnum = document.getElementById('roundnumber')
+        score = document.getElementById('score')
+        if (btn.onclick) {
+            roundnum.innerHTML = "Round";
+            score.innerHTML = "Score"
+        }
+        Randomposition()
     }
 
+    function Randomposition() {
+        Xmax = window.innerWidth;
+        Ymax = window.innerHeight;
+        CircleX = Math.random() * (Xmax - 1) + 1;
+        CircleY = Math.random() * (Ymax - 1) + 1;
+
+        console.log(CircleY)
+        console.log(CircleX)
+    }
     //a random amount of seconds is calculated between 2 and 5 seconds
     function getRandomTime() {
         var min = 2,
