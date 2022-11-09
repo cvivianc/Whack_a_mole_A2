@@ -75,21 +75,21 @@
 </body>
 
 <script type="text/javascript">
-    let 10 = document.getElementsByClassName('circle10px');
-    let 30 = document.getElementsByClassName('circle30px');
-    let 50 = document.getElementsByClassName('circle50px');
-
     // Game Logic goes here
     function StartRound() {
         // open popup
+        printtext();
+    }
+
+    function printtext() {
         btn = document.getElementById('centralCircle')
         roundnum = document.getElementById('roundnumber')
         score = document.getElementById('score')
         if (btn.onclick) {
             roundnum.innerHTML = "Round";
             score.innerHTML = "Score"
+            Randomposition();
         }
-        Randomposition()
     }
 
     function Randomposition() {
