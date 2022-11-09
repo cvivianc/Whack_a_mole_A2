@@ -85,11 +85,11 @@
         btn = document.getElementById('centralCircle')
         roundnum = document.getElementById('roundnumber')
         score = document.getElementById('score')
-        if (btn.onclick) {
-            roundnum.innerHTML = "Round";
-            score.innerHTML = "Score"
-            targetAppear();
-        }
+
+        roundnum.innerHTML = "Round";
+        score.innerHTML = "Score"
+        Randomposition();
+
     }
 
     function targetAppear(){
