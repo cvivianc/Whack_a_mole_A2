@@ -78,6 +78,10 @@
 <script type="text/javascript">
     // Game Logic goes here
     var count = 0
+    const circle1 = document.getElementById('10');
+    const circle3 = document.getElementById('30');
+    const circle5 = document.getElementById('50');
+    circlearray = [circle1, circle3, circle5];
 
     function StartRound() {
         // count how many times
@@ -87,7 +91,7 @@
         // open popup
         printtext();
         randomtarget();
-        targetAppear();
+        randomposition();
     }
 
     function printtext() {
@@ -95,33 +99,44 @@
         btn = document.getElementById('centralCircle')
         roundnum = document.getElementById('roundnumber')
         score = document.getElementById('score')
-
         roundnum.innerHTML = "Round";
         score.innerHTML = "Score"
     }
 
 
-    function targetAppear() {
-        // store positions in an array
-        // need to change to the parameters we want
-        var xPos = [100, 200, 300];
-        var yPos = [100, 200, 300];
-        CircleX = Math.floor(Math.random() * 3);
-        CircleY = Math.floor(Math.random() * 3);
-        console.log(xPos[CircleX] + "," + yPos[CircleY]);
+    // function targetAppear() {
+    //     store positions in an array
+    //     need to change to the parameters we want
+    //     CircleX = Math.floor
+    //     var xPos = [100, 200, 300];
+    //     var yPos = [100, 200, 300];
+    //     CircleX = Math.floor(Math.random() * 3);
+    //     CircleY = Math.floor(Math.random() * 3);
+    //     console.log(xPos[CircleX] + "," + yPos[CircleY]);
+    // }
+
+    function randomposition(Xpos, Ypos) {
+        Xmax = Math.ceil(window.innerWidth - 10);
+        Ymax = Math.floor(window.innerHeight - 60);
+        min = 10;
+        Xpos = Math.floor(Math.random() * (Xmax - min + 1) + min);
+        Ypos = Math.floor(Math.random() * (Ymax - min + 1) + min);
+        printcircle = randomtarget();
+        printcircle.style.left = `${Xpos}px`;
+        printcircle.style.bottom = `${Ypos}px`
+        console.log(printcircle);
     }
+
 
     function randomtarget() {
         // store circles in an array!
-        circle1 = document.getElementById('10');
-        circle3 = document.getElementById('30');
-        circle5 = document.getElementById('50');
         gettarget = [circle1, circle3, circle5];
         // get random integer from 0-2
         randomselect = Math.floor(Math.random() * 3);
-        // select the random array
-        console.log(gettarget[randomselect]);
+        return gettarget[randomselect];
     }
+
+
     //a random amount of seconds is calculated between 2 and 5 seconds
     function getRandomTime() {
         var min = 2,
