@@ -134,13 +134,13 @@
         // show circle at random time
 
         circle.addEventListener("click", targetAppear);
-
+        btn.removeEventListener('click', targetAppear);
     }
 
     function targetAppear() {
         circle.style.display = "none";
         document.getElementById('printscore').innerHTML = `${scorecount++}`;
-        circle.removeEventListener('click', targetAppear);
+
     }
 </script>
 
