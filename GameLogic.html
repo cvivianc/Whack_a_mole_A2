@@ -82,7 +82,7 @@
         document.getElementById('printround').innerHTML = count;
         // open popup
         printtext();
-        click();
+        // click();
         setTimeout(circleposition, getRandomTime());
     }
 
@@ -106,7 +106,7 @@
         console.log(circleR[randomselect]);
     }
 
-    function circlesize(Xpos, Ypos) {
+    function circleposition(Xpos, Ypos) {
         // get random integer between width and height
         Xmax = Math.ceil(window.innerWidth - 10);
         Ymax = Math.floor(window.innerHeight - 60);
@@ -114,7 +114,7 @@
         Xpos = Math.floor(Math.random() * (Xmax - min + 1) + min);
         Ypos = Math.floor(Math.random() * (Ymax - min + 1) + min);
         // get circle size
-        randomtarget();
+        circlesize();
         // get circle position
         circle.style.left = `${Xpos}px`;
         circle.style.bottom = `${Ypos}px`
