@@ -83,6 +83,7 @@
         // open popup
         printtext();
         click();
+        setTimeout(circleposition, getRandomTime());
     }
 
     function printtext() {
@@ -94,7 +95,7 @@
         score.innerHTML = "Score"
     }
 
-    function randomtarget() {
+    function circlesize() {
         // store circle radius in an array!
         circleR = ["10", "30", "50"];
         // get random integer from 0-2
@@ -105,7 +106,7 @@
         console.log(circleR[randomselect]);
     }
 
-    function circleposition(Xpos, Ypos) {
+    function circlesize(Xpos, Ypos) {
         // get random integer between width and height
         Xmax = Math.ceil(window.innerWidth - 10);
         Ymax = Math.floor(window.innerHeight - 60);
@@ -123,24 +124,23 @@
     //a random amount of seconds is calculated between 2 and 5 seconds
     function getRandomTime() {
         var min = 2,
-            max = 5,
+            max = 4,
             rand = Math.floor(Math.random() * (max - min + 1) + min);
         console.log(rand)
         return rand * 1000;
     }
 
-    function click() {
-        // show circle at random time
-        setTimeout(circleposition, getRandomTime());
-        circle.addEventListener("click", function() {
-            if (true) {
-                circle.style.display = "none";
-                document.getElementById('printscore').innerHTML = `${scorecount++}`;
-            }
-        });
+    // function click() {
+    //     // show circle at random time
 
-        return
-    }
+    //     circle.addEventListener("click", function() {
+    //         if (true) {
+    //             circle.style.display = "none";
+    //             document.getElementById('printscore').innerHTML = `${scorecount++}`;
+    //         }
+    //     });
+
+    // }
 </script>
 
 </html>
