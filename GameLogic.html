@@ -20,22 +20,19 @@
             transform: translate(-50%, -50%);
         }
         
-        .circle10px {
+        .circle {
             border-radius: 100%;
-            width: 10px;
-            height: 10px;
             background: red;
             position: absolute;
             /* transform: translate(-50%, -50%); */
         }
-        
-        .circle30px {
+        /* .circle30px {
             border-radius: 100%;
             width: 30px;
             height: 30px;
             background: red;
             position: absolute;
-            /* transform: translate(-50%, -50%); */
+            transform: translate(-50%, -50%);
         }
         
         .circle50px {
@@ -44,8 +41,8 @@
             height: 50px;
             background: red;
             position: absolute;
-            /* transform: translate(-50%, -50%); */
-        }
+            transform: translate(-50%, -50%);
+        } */
         
         .displaytext {
             font-family: 'Silkscreen', cursive;
@@ -67,18 +64,16 @@
         <h2 id="roundnumber" class="displaytext"></h2>
         <p id="printround" class="displaytext"></p>
         <h2 id="score" class="displaytext"></h2>
+        <p id="printscore" class="displaytext"></p>
     </header>
-    <div class="circle10px" id="10"></div>
-    <div class="circle30px" id="30"></div>
-    <div class="circle50px" id="50"></div>
+    <div class="circle" id="target"></div>
 </body>
 
 <script type="text/javascript">
     // Game Logic goes here
     var count = 0
-    const circle1 = document.getElementById('10');
-    const circle3 = document.getElementById('30');
-    const circle5 = document.getElementById('50');
+    var scorecount = 0
+    const circle = document.getElementById('target');
     btn = document.getElementById('centralCircle')
 
     function StartRound() {
@@ -87,8 +82,7 @@
         document.getElementById('printround').innerHTML = count;
         // open popup
         printtext();
-        // show circle at random time
-        setTimeout(circleposition, getRandomTime());
+        click();
     }
 
     function printtext() {
@@ -101,12 +95,14 @@
     }
 
     function randomtarget() {
-        // store circles in an array!
-        gettarget = [circle1, circle3, circle5];
+        // store circle radius in an array!
+        circleR = ["10", "30", "50"];
         // get random integer from 0-2
         randomselect = Math.floor(Math.random() * 3);
-        // random array
-        return gettarget[randomselect];
+        // random circle size
+        circle.style.width = `${circleR[randomselect]}px`
+        circle.style.height = `${circleR[randomselect]}px`
+        console.log(circleR[randomselect]);
     }
 
     function circleposition(Xpos, Ypos) {
@@ -116,12 +112,12 @@
         min = 10;
         Xpos = Math.floor(Math.random() * (Xmax - min + 1) + min);
         Ypos = Math.floor(Math.random() * (Ymax - min + 1) + min);
-        // select a random size
-        printcircle = randomtarget();
-        // show circle
-        printcircle.style.left = `${Xpos}px`;
-        printcircle.style.bottom = `${Ypos}px`
-        console.log(randomtarget());
+        // get circle size
+        randomtarget();
+        // get circle position
+        circle.style.left = `${Xpos}px`;
+        circle.style.bottom = `${Ypos}px`
+
     }
 
     //a random amount of seconds is calculated between 2 and 5 seconds
@@ -131,6 +127,19 @@
             rand = Math.floor(Math.random() * (max - min + 1) + min);
         console.log(rand)
         return rand * 1000;
+    }
+
+    function click() {
+        // show circle at random time
+        setTimeout(circleposition, getRandomTime());
+        circle.addEventListener("click", function() {
+            if (true) {
+                circle.style.display = "none";
+                document.getElementById('printscore').innerHTML = `${scorecount++}`;
+            }
+        });
+
+        return
     }
 </script>
 
