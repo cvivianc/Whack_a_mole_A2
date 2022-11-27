@@ -82,7 +82,7 @@
         document.getElementById('printround').innerHTML = count;
         // open popup
         printtext();
-        // click();
+
         setTimeout(circleposition, getRandomTime());
     }
 
@@ -130,17 +130,22 @@
         return rand * 1000;
     }
 
-    // function click() {
-    //     // show circle at random time
+    function click() {
+        // show circle at random time
 
-    //     circle.addEventListener("click", function() {
-    //         if (true) {
-    //             circle.style.display = "none";
-    //             document.getElementById('printscore').innerHTML = `${scorecount++}`;
-    //         }
-    //     });
+        circle.addEventListener("click", targetAppear());
 
-    // }
+    }
+
+    function targetAppear() {
+
+        circle.style.display = "none";
+        document.getElementById('printscore').innerHTML = `${scorecount++}`;
+        circle.removeEventListener('click',
+            circle.style.display = "none";
+        );
+
+    }
 </script>
 
 </html>
