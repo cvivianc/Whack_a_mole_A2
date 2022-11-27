@@ -73,7 +73,7 @@
     // Game Logic goes here
     var count = 0
     var scorecount = 0
-    const redcircle = document.getElementById('target');
+    const circle = document.getElementById('target');
     btn = document.getElementById('centralCircle')
 
     function StartRound() {
@@ -101,8 +101,8 @@
         // get random integer from 0-2
         randomselect = Math.floor(Math.random() * 3);
         // random circle size
-        redcircle.style.width = `${circleR[randomselect]}px`
-        redcircle.style.height = `${circleR[randomselect]}px`
+        circle.style.width = `${circleR[randomselect]}px`
+        circle.style.height = `${circleR[randomselect]}px`
         console.log(circleR[randomselect]);
     }
 
@@ -116,8 +116,8 @@
         // get circle size
         circlesize();
         // get circle position
-        redcircle.style.left = `${Xpos}px`;
-        redcircle.style.bottom = `${Ypos}px`
+        circle.style.left = `${Xpos}px`;
+        circle.style.bottom = `${Ypos}px`
 
     }
 
@@ -133,16 +133,14 @@
     function click() {
         // show circle at random time
 
-        redcircle.addEventListener("click", targetAppear);
+        circle.addEventListener("click", targetAppear);
 
     }
 
     function targetAppear() {
-        redcircle.style.display = "none";
+        circle.style.display = "none";
         document.getElementById('printscore').innerHTML = `${scorecount++}`;
-        redcircle.removeEventListener('click',
-            redcircle.style.display = "none");
-
+        circle.removeEventListener('click', targetAppear);
     }
 </script>
 
