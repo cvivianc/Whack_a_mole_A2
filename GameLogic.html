@@ -26,27 +26,13 @@
             position: absolute;
             /* transform: translate(-50%, -50%); */
         }
-        /* .circle30px {
-            border-radius: 100%;
-            width: 30px;
-            height: 30px;
-            background: red;
-            position: absolute;
-            transform: translate(-50%, -50%);
-        }
-        
-        .circle50px {
-            border-radius: 100%;
-            width: 50px;
-            height: 50px;
-            background: red;
-            position: absolute;
-            transform: translate(-50%, -50%);
-        } */
         
         .displaytext {
             font-family: 'Silkscreen', cursive;
         }
+        /* #timer{
+            color: orangered;
+        }*/
     </style>
 </head>
 
@@ -61,10 +47,11 @@
     </h1>
     <header>
         <!-- display text -->
-        <h2 id="roundnumber" class="displaytext"></h2>
-        <p id="printround" class="displaytext"></p>
+        <h2 id="printround" class="displaytext"></h2>
+        <h2 id="timer" class="displaytext"></h2>
         <h2 id="score" class="displaytext"></h2>
         <p id="printscore" class="displaytext"></p>
+
     </header>
     <div class="circle" id="target"></div>
 </body>
@@ -73,40 +60,51 @@
     // Game Logic goes here
     var count = 0
     var scorecount = 0
-    const circle = document.getElementById('target');
-    btn = document.getElementById('centralCircle')
+    const mole = document.getElementById('target');
+    btn = document.getElementById('centralCircle');
+
+    let displaytime = [];
+
+    let IData = [];
+
+    var roundStarted = false;
 
     function StartRound() {
+        if (roundStarted) return;
+        if (count === 3)
+            if (confirm("New Game?")) {
+                count = 0;
+                scorecount = 0;
+            }
+
+        roundStarted = true;
         // count how many times
-        count++
-        document.getElementById('printround').innerHTML = count;
-        // open popup
-        printtext();
-        // click();
-        setTimeout(circleposition, getRandomTime());
+        count++;
+        document.getElementById('printround').innerHTML = 'Round  ' + count;
+        document.getElementById('score').innerHTML = 'Score';
+        // document.getElementById('timer').innerHTML = 'Timer'+ ((getRandomTime(3, 6))/1000) ;
+        clearTimeout(moleTimer);
+        // show circle at random time
+        setTimeout(circleposition, getRandomTime(1, 5));
+        mole.addEventListener('click', hitMole, 'once');
     }
 
-    function printtext() {
-        // print score and round 
-        roundnum = document.getElementById('roundnumber')
-        score = document.getElementById('score')
-            // type in text
-        roundnum.innerHTML = "Round";
-        score.innerHTML = "Score"
-    }
 
-    function circlesize() {
-        // store circle radius in an array!
-        circleR = ["10", "30", "50"];
-        // get random integer from 0-2
-        randomselect = Math.floor(Math.random() * 3);
-        // random circle size
-        circle.style.width = `${circleR[randomselect]}px`
-        circle.style.height = `${circleR[randomselect]}px`
-        console.log(circleR[randomselect]);
-    }
+    // function printtext() {
+    //     // print score and round 
+    //     roundnum = document.getElementById('roundnumber')
+    //     score = document.getElementById('score')
+
+    //         // type in text
+    //     roundnum.innerHTML = "Round";
+    //     score.innerHTML = "Score";
+    // }
+
+
+    var moleTimer = undefined;
 
     function circleposition(Xpos, Ypos) {
+        mole.style.display = "initial";
         // get random integer between width and height
         Xmax = Math.ceil(window.innerWidth - 10);
         Ymax = Math.floor(window.innerHeight - 60);
@@ -115,32 +113,69 @@
         Ypos = Math.floor(Math.random() * (Ymax - min + 1) + min);
         // get circle size
         circlesize();
-        // get circle position
-        circle.style.left = `${Xpos}px`;
-        circle.style.bottom = `${Ypos}px`
+        // get circle position-
+        mole.style.left = `${Xpos}px`;
+        mole.style.bottom = `${Ypos}px`
+
+        function circlesize() {
+            // store circle radius in an array!
+            circleR = ["10", "30", "50"];
+            randomselect = Math.floor(Math.random() * 3);
+            // random circle size
+            mole.style.width = `${circleR[randomselect]}px`
+            mole.style.height = `${circleR[randomselect]}px`
+            return circleR[randomselect]
+
+
+        }
+        const distance = Math.sqrt((512 - Xpos) ** 2 + (384 - Ypos) ** 2)
+        const ID = Math.log2(distance / (circleR[randomselect] / 2) + 1)
+        console.log(ID)
+        moleTimer = setTimeout(() => {
+                mole.style.display = "none";
+                roundStarted = false;
+                mole.removeEventListener('click', hitMole);
+            },
+            getRandomTime(2, 6));
+
+        IData.push(ID);
 
     }
 
     //a random amount of seconds is calculated between 2 and 5 seconds
-    function getRandomTime() {
-        var min = 2,
-            max = 4,
-            rand = Math.floor(Math.random() * (max - min + 1) + min);
+    function getRandomTime(min, max) {
+        rand = Math.floor(Math.random() * (max - min + 1) + min);
         console.log(rand)
         return rand * 1000;
+
     }
 
-    // function click() {
-    //     // show circle at random time
+    function hitMole(event) {
+        console.log("Hit!");
+        roundStarted = false;
+        //mole.removeEventListener('click',clickcircle);
+        if (typeof moleTimer === "number") {
+            clearTimeout(moleTimer);
+            console.log("clear");
+        } else
+            console.log("No clear");
+        mole.style.display = "none";
+        scorecount++;
+        console.log("score=" + scorecount);
+        document.getElementById('printscore').innerHTML = `${scorecount}`;
+        //clearTimeout(moleTimer);
+        return;
+    }
 
-    //     circle.addEventListener("click", function() {
-    //         if (true) {
-    //             circle.style.display = "none";
-    //             document.getElementById('printscore').innerHTML = `${scorecount++}`;
-    //         }
-    //     });
-
-    // }
+    function saveToCsv() {
+        var encodedUri = encodeURI(csvContent);
+        console.log(encodedUri);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "results.csv");
+        document.body.appendChild(link);
+        link.click();
+    }
 </script>
 
 </html>
