@@ -62,7 +62,7 @@
     var scorecount = 0
     const mole = document.getElementById('target');
     btn = document.getElementById('centralCircle');
-    let start = Date.now();
+
 
     let displaytime = [];
 
@@ -74,10 +74,12 @@
 
     var roundStarted = false;
 
+    let start = Date.now();
 
     function StartRound() {
+
         if (roundStarted) return;
-        if (count === 3)
+        if (count === 60)
             if (confirm("New Game?")) {
                 count = 0;
                 scorecount = 0;
@@ -99,6 +101,7 @@
     var moleTimer = undefined;
 
     function circleposition(Xpos, Ypos) {
+        start = Date.now();
         mole.style.display = "initial";
         // get random integer between width and height
         Xmax = Math.ceil(window.innerWidth - 10);
@@ -150,11 +153,12 @@
 
         //mole.removeEventListener('click',clickcircle);
         if (typeof moleTimer === "number") {
-            let end = Date.now();
-            reactiontime.push(end - start);
             clearTimeout(moleTimer);
-        } else
-            mole.style.display = "none";
+        }
+        let end = Date.now();
+        reactiontime.push(end - start);
+        console.log(end - start)
+        mole.style.display = "none";
         scorecount++;
         console.log("score=" + scorecount);
         score.push(scorecount);
