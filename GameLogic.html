@@ -62,12 +62,18 @@
     var scorecount = 0
     const mole = document.getElementById('target');
     btn = document.getElementById('centralCircle');
+    let start = Date.now();
 
     let displaytime = [];
 
     let IData = [];
 
+    let score = [];
+
+    let reactiontime = [];
+
     var roundStarted = false;
+
 
     function StartRound() {
         if (roundStarted) return;
@@ -75,6 +81,7 @@
             if (confirm("New Game?")) {
                 count = 0;
                 scorecount = 0;
+                saveToCsv();
             }
 
         roundStarted = true;
@@ -88,18 +95,6 @@
         setTimeout(circleposition, getRandomTime(1, 5));
         mole.addEventListener('click', hitMole, 'once');
     }
-
-
-    // function printtext() {
-    //     // print score and round 
-    //     roundnum = document.getElementById('roundnumber')
-    //     score = document.getElementById('score')
-
-    //         // type in text
-    //     roundnum.innerHTML = "Round";
-    //     score.innerHTML = "Score";
-    // }
-
 
     var moleTimer = undefined;
 
@@ -125,21 +120,21 @@
             mole.style.width = `${circleR[randomselect]}px`
             mole.style.height = `${circleR[randomselect]}px`
             return circleR[randomselect]
-
-
         }
+
         const distance = Math.sqrt((512 - Xpos) ** 2 + (384 - Ypos) ** 2)
         const ID = Math.log2(distance / (circleR[randomselect] / 2) + 1)
-        console.log(ID)
+        let timer = getRandomTime(2, 6);
+
         moleTimer = setTimeout(() => {
+
                 mole.style.display = "none";
                 roundStarted = false;
                 mole.removeEventListener('click', hitMole);
             },
-            getRandomTime(2, 6));
-
+            timer);
+        displaytime.push(timer);
         IData.push(ID);
-
     }
 
     //a random amount of seconds is calculated between 2 and 5 seconds
@@ -147,32 +142,57 @@
         rand = Math.floor(Math.random() * (max - min + 1) + min);
         console.log(rand)
         return rand * 1000;
-
     }
 
     function hitMole(event) {
         console.log("Hit!");
         roundStarted = false;
+
         //mole.removeEventListener('click',clickcircle);
         if (typeof moleTimer === "number") {
+            let end = Date.now();
+            reactiontime.push(end - start);
             clearTimeout(moleTimer);
-            console.log("clear");
         } else
-            console.log("No clear");
-        mole.style.display = "none";
+            mole.style.display = "none";
         scorecount++;
         console.log("score=" + scorecount);
+        score.push(scorecount);
         document.getElementById('printscore').innerHTML = `${scorecount}`;
-        //clearTimeout(moleTimer);
+
         return;
     }
 
-    function saveToCsv() {
-        var encodedUri = encodeURI(csvContent);
-        console.log(encodedUri);
-        var link = document.createElement("a");
+    function  saveToCsv() {
+        var  encodedUri, link;
+        let  csvContent  = "data:text/csv;charset=utf-8,Reaction times/ms, Display Time/ms, score, ID";
+
+        reactiontime.forEach(function (infoArray) {
+            let  row  = infoArray ;
+            csvContent  += row  + "\r\n";
+        });
+
+        displaytime.forEach(function (infoArray) {
+            let  row  = infoArray ;
+            csvContent  += "," + row  + "\r\n";
+        });
+
+
+        score.forEach(function (infoArray) {
+            let  row  = infoArray ;
+            csvContent  += ","  + "," + row  + "\r\n";
+        });
+
+        IData.forEach(function (infoArray) {
+            let  row  = infoArray ;
+            csvContent  += "," + "," + "," + row  + "\r\n";
+        });
+
+        encodedUri  = encodeURI(csvContent);
+
+        link  = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "results.csv");
+        link.setAttribute("download", "whack-a-mole-.csv");
         document.body.appendChild(link);
         link.click();
     }
